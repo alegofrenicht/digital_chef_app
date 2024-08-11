@@ -14,8 +14,25 @@ const timeout = function (s) {
 
 // https://forkify-api.herokuapp.com/v2
 
+
+
+const renderSpinner = function(parentEl) {
+    const markup = `
+    <div class="spinner">
+      <svg>
+        <use href="${icons}#icon-loader"></use>
+      </svg>
+    </div>
+  `
+  parentEl.innerHTML = '';
+  parentEl.insertAdjacentHTML('afterbegin', markup);
+}
+
 const showRecipe = async function () {
   try {
+
+    renderSpinner(recipeContainer);
+    
     const res = await fetch('https://api.spoonacular.com/recipes/654950/information?apiKey=d754bd859d5c40abaf88e8715002bd21');
     const data = await res.json();
 
