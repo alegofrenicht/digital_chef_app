@@ -30,10 +30,13 @@ const renderSpinner = function(parentEl) {
 
 const showRecipe = async function () {
   try {
+    const id = window.location.hash.slice(1);
+    console.log(id);
+
 
     renderSpinner(recipeContainer);
     
-    const res = await fetch('https://api.spoonacular.com/recipes/654950/information?apiKey=d754bd859d5c40abaf88e8715002bd21');
+    const res = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=d754bd859d5c40abaf88e8715002bd21`);
     const data = await res.json();
 
     if(!res.ok) throw new Error(`${data.message}`)
@@ -133,6 +136,7 @@ const showRecipe = async function () {
   
 }
 
-showRecipe();
-
-
+// const some = ['hashchange', 'load'];
+['hashchange', 'load'].forEach(ev => console.log(ev))
+window.addEventListener('hashchange', showRecipe);
+window.addEventListener('load', showRecipe);
