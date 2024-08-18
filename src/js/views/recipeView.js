@@ -1,4 +1,5 @@
 import icons from "url:../../img/icons.svg";
+import fracty from "fracty";
 
 class RecipeView {
     #parentElement = document.querySelector('.recipe');
@@ -80,19 +81,7 @@ class RecipeView {
             <div class="recipe__ingredients">
             <h2 class="heading--2">Recipe ingredients</h2>
             <ul class="recipe__ingredient-list">
-                ${this.#data.ingredients.map(ing => {
-                return `
-                <li class="recipe__ingredient">
-                <svg class="recipe__icon">
-                    <use href="${icons}#icon-check"></use>
-                </svg>
-                <div class="recipe__quantity">${ing.amount}</div>
-                <div class="recipe__description">
-                    <span class="recipe__unit">${ing.unit}</span>
-                    of ${ing.name}
-                </div>
-                </li>
-                `}).join('')}
+                ${this.#data.ingredients.map(this.#generateMarkupIngredients).join('')}
             </div>
             <div class="recipe__directions">
             <h2 class="heading--2">How to cook it</h2>
@@ -114,7 +103,21 @@ class RecipeView {
             </div>
             `;
     }
-}
+
+    #generateMarkupIngredients(ing){
+            return `
+            <li class="recipe__ingredient">
+            <svg class="recipe__icon">
+                <use href="${icons}#icon-check"></use>
+            </svg>
+            <div class="recipe__quantity">${ing.amount ? fracty(ing.amount.toFixed(2)) : ''}</div>
+            <div class="recipe__description">
+                <span class="recipe__unit">${ing.unit}</span>
+                of ${ing.name}
+            </div>
+            </li>
+            `}
+    }
 
 export default new RecipeView();
 
