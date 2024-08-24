@@ -19,7 +19,7 @@ export const loadRecipe = async function(id){
         ingredients: data.extendedIngredients,
     };
     } catch(err){
-        alert(err);
+        throw err;
     };
 };
 
