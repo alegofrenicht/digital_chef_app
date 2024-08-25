@@ -3,13 +3,15 @@ import { getJSON } from "./helpers.js";
 
 export const state = {
     recipe: {},
+    search: {
+       query: '',
+       results: []
+    }
 };
 
 export const loadRecipe = async function(id){
     try{
-        const data = await getJSON(`${API_URL}${id}/${API_KEY}`);
-        // const data = await getJSON(`https://api.spoonacular.com/recipes/complexSearch?query=pasta&maxFat=25&number=2&apiKey=d754bd859d5c40abaf88e8715002bd21`);
-        console.log(data);
+        const data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
         state.recipe = {
             id: data.id,
             title: data.title,
@@ -28,12 +30,22 @@ export const loadRecipe = async function(id){
 
 export const loadSearchResults = async function (query) {
     try{
-
+        state.search.query = query;
+        const data = await getJSON(`${API_URL}complexSearch?query=${query}&number=100&${API_KEY}`);
+        state.search.results = data.results.map(rec => {
+          return {
+            id: rec.id,
+            title: rec.title,
+            image: rec.image,
+          }  
+        })
     } catch(err){
         console.log(err)
         throw err;
     };
 
 }
+
+// loadSearchResults('pizza');
 
 

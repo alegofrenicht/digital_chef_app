@@ -6,7 +6,7 @@ import recipeView from './views/recipeView.js';
 
 // https://forkify-api.herokuapp.com/v2
 
-const showRecipe = async function () {
+const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
 
@@ -21,8 +21,19 @@ const showRecipe = async function () {
   
 };
 
+const controlSearchResults = async function(){
+  try{
+    await model.loadSearchResults('pizza');
+    console.log(model.state.search.results);
+  } catch(err){
+    console.log(err);
+  }
+};
+
+controlSearchResults();
+
 const init = function(){
-  recipeView.addHandlerRender(showRecipe())
+  recipeView.addHandlerRender(controlRecipes())
 }
 
 init()
