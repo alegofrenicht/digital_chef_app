@@ -5,8 +5,9 @@ export default class View {
 
     render(data) {
       this._data = data;
-      const markup = this._generateMarkup();
       this._clear();
+      const markup = this._generateMarkup();
+      
       this._parentElement.insertAdjacentHTML('afterbegin', markup);
     };
 
@@ -40,7 +41,7 @@ export default class View {
             `;
         this._clear();
         this._parentElement.insertAdjacentHTML('afterbegin', markup);
-    }
+    };
 
 
     renderMessage(message = this._successMessage){
@@ -56,6 +57,6 @@ export default class View {
             `;
         this._clear();
         this._parentElement.insertAdjacentHTML('afterbegin', markup);
-    }
+    };
 
-}
+};
