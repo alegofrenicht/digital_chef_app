@@ -31,12 +31,13 @@ export const loadRecipe = async function(id){
 export const loadSearchResults = async function (query) {
     try{
         state.search.query = query;
-        const data = await getJSON(`${API_URL}complexSearch?query=${query}&number=100&${API_KEY}`);
+        const data = await getJSON(`${API_URL}complexSearch?query=${query}&number=15&addRecipeInformation=true&${API_KEY}`);
         state.search.results = data.results.map(rec => {
           return {
             id: rec.id,
             title: rec.title,
             image: rec.image,
+            publisher: rec.sourceName,
           }  
         })
     } catch(err){
