@@ -9,9 +9,9 @@ class ResultsView extends View {
     _errorMessage = 'No recipes found! Please try again :(';
 
     _generateMarkup() {
-      
       return this._data.map(this._generateMarkupPreview).join('');
     };
+
     _generateMarkupPreview(recipe) {
       return `
       <li class="preview">

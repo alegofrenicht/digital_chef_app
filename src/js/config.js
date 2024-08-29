@@ -1,6 +1,7 @@
 export const API_URL = "https://api.spoonacular.com/recipes/";
 export const API_KEY = "apiKey=628ba7cdbd2f4746970e4e80fa96fac3";
 export const TIMEOUT_SEC = 10;
+export const REC_PER_PAGE = 10; 
 
 
 // alexander-replyansky@yandex.ru
