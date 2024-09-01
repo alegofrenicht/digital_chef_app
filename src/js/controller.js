@@ -48,7 +48,6 @@ const controlSearchResults = async function(){
 };
 
 const controlServings = function(servings) {
-  console.log("controlServings", servings);
   model.updateServings(servings);
   recipeView.render(model.state.recipe);
 }
