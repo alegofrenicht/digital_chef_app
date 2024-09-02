@@ -18,9 +18,23 @@ export default class View {
       const newMarkup = this._generateMarkup();
 
       const newDOM =  document.createRange().createContextualFragment(newMarkup);
-      const newElements = newDOM.querySelectorAll('*');
-      console.log(newElements);
-    }
+      const newElements = Array.from(newDOM.querySelectorAll('*'));
+      const currElements = Array.from(this._parentElement.querySelectorAll('*'));
+
+      newElements.forEach((newEl, i) => {
+
+        const currEl = currElements[i];
+
+        if(!newEl.isEqualNode(currEl)){
+          Array.from(newEl.attributes).forEach(attr => currEl.setAttribute(attr.name, attr.value))
+          if (newEl.firstChild?.nodeValue.trim() !== '') {
+            currEl.textContent = newEl.textContent;
+          };
+        };
+
+
+      });
+    };
 
     _clear(){
         this._parentElement.innerHTML = '';
