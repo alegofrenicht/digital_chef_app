@@ -5,24 +5,20 @@ import View from "./View";
 
 
 class PreviewView extends View {
-    _parentElement = document.querySelector('');
+    _parentElement = '';
 
     _generateMarkup() {
-      return this._data.map(this._generateMarkupPreview).join('');
-    };
-
-    _generateMarkupPreview(recipe) {
       const id = window.location.hash.slice(1);
 
       return `
       <li class="preview">
-        <a class="preview__link ${recipe.id === +id ? 'preview__link--active' : ''}" href="#${recipe.id}">
+        <a class="preview__link ${this._data.id === +id ? 'preview__link--active' : ''}" href="#${this._data.id}">
           <figure class="preview__fig">
-            <img src="${recipe.image}" alt="${recipe.title}" />
+            <img src="${this._data.image}" alt="${this._data.title}" />
           </figure>
           <div class="preview__data">
-            <h4 class="preview__title">${recipe.title}...</h4>
-            <p class="preview__publisher">${recipe.publisher}</p>
+            <h4 class="preview__title">${this._data.title}...</h4>
+            <p class="preview__publisher">${this._data.publisher}</p>
             </div>
           </div>
         </a>
