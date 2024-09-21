@@ -1,5 +1,5 @@
 import { API_URL, API_KEY, REC_PER_PAGE } from "./config.js";
-import { getJSON } from "./helpers.js";
+import { getJSON, sendJSON } from "./helpers.js";
 
 export const state = {
     recipe: {},
@@ -92,6 +92,37 @@ const init = function() {
     if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();
+
+export const uploadRecipe = async function (newRecipe) {
+      const ingredients = Object.entries(newRecipe)
+      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
+      .map(ing => {
+      //   const ingArr = ing[1].split(',').map(el => el.trim());
+          const ingArr = ing[1].replaceAll(' ', '').split(',');
+          if (ingArr.length !== 3)
+          throw new Error(
+              'Wrong ingredient fromat! Please use the correct format :)'
+          );
+
+          const [quantity, unit, description] = ingArr;
+
+          return { quantity: quantity ? +quantity : null, unit, description };
+      });
+      const recipe = {
+        title: newRecipe.title,
+        publisher: newRecipe.publisher,
+        sourceUrl: newRecipe.sourceUrl,
+        image: newRecipe.image,
+        servings: +newRecipe.servings,
+        cookingTime: +newRecipe.cookingTime,
+        ingredients,
+      };
+
+      console.log("recipe", recipe);
+      // sendJSON()
+    };
+
+    
 
 
 
