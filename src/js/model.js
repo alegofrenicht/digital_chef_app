@@ -15,6 +15,7 @@ export const state = {
 export const loadRecipe = async function(id){
     try{
         const data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
+        console.log(data);
         state.recipe = {
             id: data.id,
             title: data.title,
@@ -119,6 +120,7 @@ export const uploadRecipe = async function (newRecipe) {
       };
 
       console.log("recipe", recipe);
+      localStorage.setItem('recipes', JSON.stringify(recipe));
       // sendJSON()
     };
 
