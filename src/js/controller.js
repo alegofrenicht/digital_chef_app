@@ -5,6 +5,7 @@ import resultsView from './views/resultsView.js';
 import bookmarksView from './views/bookmarksView.js';
 import paginationView from './views/paginationView.js';
 import addRecipeView from './views/addRecipeView.js';
+import myRecipesView from './views/myRecipesView.js';
 
 // if (module.hot) {
 //   module.hot.accept();
@@ -67,6 +68,10 @@ const controlAddBookmark = function() {
 }
 
 const controlBookmarks = function() {
+  bookmarksView.render(model.state.bookmarks);
+};
+
+const controlMyRecipes = function() {
   bookmarksView.render(model.state.bookmarks);
 };
 

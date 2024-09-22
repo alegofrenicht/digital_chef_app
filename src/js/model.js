@@ -3,6 +3,7 @@ import { getJSON, sendJSON } from "./helpers.js";
 
 export const state = {
     recipe: {},
+    my_recipes: [],
     search: {
        query: '',
        results: [],
@@ -120,7 +121,11 @@ export const uploadRecipe = async function (newRecipe) {
       };
 
       console.log("recipe", recipe);
-      localStorage.setItem('recipes', JSON.stringify(recipe));
+      state.my_recipes.push(recipe);
+      localStorage.setItem('recipes', JSON.stringify(state.my_recipes));
+      console.log(state.my_recipes);
+      const storage = localStorage.getItem('recipes');
+      if (storage) state.my_recipes = JSON.parse(storage);
       // sendJSON()
     };
 
