@@ -16,7 +16,6 @@ export const state = {
 export const loadRecipe = async function(id){
     try{
         const data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
-        console.log(data);
         state.recipe = {
             id: data.id,
             title: data.title,
@@ -68,11 +67,11 @@ export const updateServings = function(servings){
         ing.amount = ing.amount / state.recipe.servings * servings;
     });
     state.recipe.servings = servings;
-}
+};
 
 const persistBookmarks = function() {
     localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
-}
+};
 
 export const addBookmark = function(recipe){
     state.bookmarks.push(recipe);
@@ -90,8 +89,11 @@ export const deleteBookMark = function(id) {
 };
 
 const init = function() {
-    const storage = localStorage.getItem('bookmarks');
-    if (storage) state.bookmarks = JSON.parse(storage);
+    const storage_bookmarks = localStorage.getItem('bookmarks');
+    if (storage_bookmarks) state.bookmarks = JSON.parse(storage_bookmarks);
+
+    const storage_recipes = localStorage.getItem('recipes');
+    if (storage_recipes) state.my_recipes = JSON.parse(storage_recipes);
 };
 init();
 
@@ -120,12 +122,9 @@ export const uploadRecipe = async function (newRecipe) {
         ingredients,
       };
 
-      console.log("recipe", recipe);
       state.my_recipes.push(recipe);
       localStorage.setItem('recipes', JSON.stringify(state.my_recipes));
       console.log(state.my_recipes);
-      const storage = localStorage.getItem('recipes');
-      if (storage) state.my_recipes = JSON.parse(storage);
       // sendJSON()
     };
 

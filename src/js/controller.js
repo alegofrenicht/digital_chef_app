@@ -16,7 +16,7 @@ import myRecipesView from './views/myRecipesView.js';
 
 const controlSearchPagination = function(pagenum = 1){
   resultsView.render(model.getSearchResultsPage(pagenum));
-    paginationView.render(model.state.search);
+  paginationView.render(model.state.search);
 };
 
 const controlRecipes = async function () {
@@ -71,9 +71,6 @@ const controlBookmarks = function() {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controlMyRecipes = function() {
-  bookmarksView.render(model.state.bookmarks);
-};
 
 const controlAddRecipe = async function (newRecipe) {
   try {
@@ -82,9 +79,15 @@ const controlAddRecipe = async function (newRecipe) {
     console.error(err);
     addRecipeView.renderError(err.message);
   }
-}
+};
+
+const controlMyRecipes = function() {
+  myRecipesView.render(model.state.my_recipes);
+  myRecipesView.update(model.state.my_recipes);
+};
 
 const init = function(){
+  myRecipesView.addHandlerRender(controlMyRecipes);
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
