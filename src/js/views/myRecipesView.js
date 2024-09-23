@@ -14,19 +14,7 @@ class myRecipesView extends View {
       window.addEventListener('load', handler);
     };
 
-    addHandlerAddRecipe(handler){
-      this._parentElement.addEventListener('click', function(e){
-          const btn = e.target.closest('.upload__btn');
-          if (!btn) return
-          console.log("HELLO");
-          handler();
-
-      })
-  };
-
     _generateMarkup() {
-      console.log(this._data);
-      console.log(this._parentElement)
       return this._data.map(recipe => previewView.render(recipe, false)).join('');
     };
 };
