@@ -36,6 +36,8 @@ class AddRecipeView extends View {
         this._parentElement.addEventListener('submit', function(e) {
             e.preventDefault();
             const data = Object.fromEntries([...new FormData(this)]);
+            document.querySelector('.add-recipe-window').classList.toggle('hidden');
+            document.querySelector('.overlay').classList.toggle('hidden');
             handler(data);
         })
     }

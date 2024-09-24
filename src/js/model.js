@@ -126,7 +126,6 @@ export const uploadRecipe = async function (newRecipe) {
       if (Object.entries(recipe).some(array => array[1] == undefined)) return;
       state.my_recipes.push(recipe);
       localStorage.setItem('recipes', JSON.stringify(state.my_recipes));
-      console.log(state.my_recipes);
       // sendJSON()
     };
 
