@@ -33,14 +33,13 @@ class AddRecipeView extends View {
     };
 
     addHandlerUpload(handler) {
-        this._parentElement.addEventListener('submit', function(e) {
+        this._parentElement.addEventListener('submit', (e) => {
             e.preventDefault();
-            const data = Object.fromEntries([...new FormData(this)]);
-            document.querySelector('.add-recipe-window').classList.toggle('hidden');
-            document.querySelector('.overlay').classList.toggle('hidden');
+            const data = Object.fromEntries([...new FormData(this._parentElement)]);
+            this.toggleWindow();
             handler(data);
         })
-    }
+    };
 
     _generateMarkup() {};
 };

@@ -1,4 +1,6 @@
 .preview {
+
+  list-style: none;
   &__link {
     &:link,
     &:visited {
@@ -13,6 +15,7 @@
     &:hover {
       background-color: $color-grey-light-1;
       transform: translateY(-2px);
+      text-decoration: none;
     }
 
     &--active {
