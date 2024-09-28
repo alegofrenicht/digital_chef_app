@@ -15,6 +15,7 @@ export const state = {
 
 export const loadRecipe = async function(id){
     try{
+        if (isNaN(id)) return;
         const data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
         state.recipe = {
             id: data.id,

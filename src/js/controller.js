@@ -23,7 +23,7 @@ const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
 
-    if (!id) return;
+    if (isNaN(id)) return;
     recipeView.renderSpinner();
 
     resultsView.update(model.getSearchResultsPage());
