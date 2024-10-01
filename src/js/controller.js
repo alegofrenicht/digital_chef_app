@@ -75,6 +75,11 @@ const controlBookmarks = function() {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
+    if (newRecipe.title == undefined) return;
+    if (model.state.my_recipes.some(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase()))
+      throw new Error(
+          'Such recipe already exists, please try another name :)'
+      )
     await model.uploadRecipe(newRecipe);
     myRecipesView.render(model.state.my_recipes);
   } catch (err) {
@@ -82,13 +87,13 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
-// const controlMyRecipes = function() {
-//   myRecipesView.render(model.state.my_recipes);
-//   myRecipesView.update(model.state.my_recipes);
-// };
+const controlMyRecipes = function() {
+  myRecipesView.render(model.state.my_recipes);
+  myRecipesView.update(model.state.my_recipes);
+};
 
 const init = function(){
-  // myRecipesView.addHandlerRender(controlMyRecipes);
+  myRecipesView.addHandlerRender(controlMyRecipes);
   myRecipesView.addHandlerRender(controlAddRecipe);
   addRecipeView.addHandlerUpload(controlAddRecipe);
   bookmarksView.addHandlerRender(controlBookmarks);

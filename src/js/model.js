@@ -106,7 +106,7 @@ export const uploadRecipe = async function (newRecipe) {
           const ingArr = ing[1].replaceAll(' ', '').split(',');
           if (ingArr.length !== 3)
           throw new Error(
-              'Wrong ingredient fromat! Please use the correct format :)'
+              'Wrong ingredient format! Please use the correct format :)'
           );
 
           const [quantity, unit, description] = ingArr;
@@ -114,7 +114,9 @@ export const uploadRecipe = async function (newRecipe) {
           return { quantity: quantity ? +quantity : null, unit, description };
       });
 
+
       const recipe = {
+        id: newRecipe.title + newRecipe.cookingTime,
         title: newRecipe.title,
         publisher: newRecipe.publisher,
         sourceUrl: newRecipe.sourceUrl,
@@ -124,7 +126,6 @@ export const uploadRecipe = async function (newRecipe) {
         ingredients,
       };
 
-      if (Object.entries(recipe).some(array => array[1] == undefined)) return;
       state.my_recipes.push(recipe);
       localStorage.setItem('recipes', JSON.stringify(state.my_recipes));
       // sendJSON()
