@@ -15,8 +15,14 @@ export const state = {
 
 export const loadRecipe = async function(id){
     try{
-        if (isNaN(id)) return;
-        const data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
+        let data;
+        console.log(id);
+        if (isNaN(id)) {
+            [data] = state.my_recipes.filter(recipe => recipe.id == id.replaceAll('%20', ' '))
+        } else {
+            data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
+        };
+        console.log(data);
         state.recipe = {
             id: data.id,
             title: data.title,
@@ -99,7 +105,7 @@ const init = function() {
 init();
 
 export const uploadRecipe = async function (newRecipe) {
-      const ingredients = Object.entries(newRecipe)
+      const extendedIngredients = Object.entries(newRecipe)
       .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map(ing => {
       //   const ingArr = ing[1].split(',').map(el => el.trim());
@@ -109,21 +115,20 @@ export const uploadRecipe = async function (newRecipe) {
               'Wrong ingredient format! Please use the correct format :)'
           );
 
-          const [quantity, unit, description] = ingArr;
+          const [amount, unit, name] = ingArr;
 
-          return { quantity: quantity ? +quantity : null, unit, description };
+          return { amount: amount ? +amount : null, unit, name };
       });
-
 
       const recipe = {
         id: newRecipe.title + newRecipe.cookingTime,
         title: newRecipe.title,
-        publisher: newRecipe.publisher,
+        creditsText: newRecipe.publisher,
         sourceUrl: newRecipe.sourceUrl,
         image: newRecipe.image,
         servings: +newRecipe.servings,
-        cookingTime: +newRecipe.cookingTime,
-        ingredients,
+        readyInMinutes: +newRecipe.cookingTime,
+        extendedIngredients,
       };
 
       state.my_recipes.push(recipe);

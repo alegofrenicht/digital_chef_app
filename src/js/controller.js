@@ -23,7 +23,7 @@ const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
 
-    if (isNaN(id)) return;
+    if (!id) return;
     recipeView.renderSpinner();
 
     resultsView.update(model.getSearchResultsPage());
@@ -76,10 +76,10 @@ const controlBookmarks = function() {
 const controlAddRecipe = async function (newRecipe) {
   try {
     if (newRecipe.title == undefined) return;
-    if (model.state.my_recipes.some(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase()))
-      throw new Error(
-          'Such recipe already exists, please try another name :)'
-      )
+    if (model.state.my_recipes.some(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase())) return
+      // throw new Error(
+      //     'Such recipe already exists, please try another name :)'
+      // )
     await model.uploadRecipe(newRecipe);
     myRecipesView.render(model.state.my_recipes);
   } catch (err) {
