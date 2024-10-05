@@ -7,6 +7,8 @@ import { state } from "../model";
 
 class AddRecipeView extends View {
     _parentElement = document.querySelector('.upload');
+    _successMessage = '';
+    _errormessage = '';
     _window = document.querySelector('.add-recipe-window');
     _overlay = document.querySelector('.overlay');
     _btnOpen = document.querySelector('.nav__btn--add-recipe');
@@ -19,12 +21,13 @@ class AddRecipeView extends View {
     }
 
     toggleWindow() {
+        if (this._errormessage.length > 0 || this._successMessage.length > 0) window.location.reload();
         this._overlay.classList.toggle('hidden');
         this._window.classList.toggle('hidden');
     }
 
     _addHandlerShowWindow() {
-       this._btnOpen.addEventListener('click', this.toggleWindow.bind(this));
+        this._btnOpen.addEventListener('click', this.toggleWindow.bind(this));
     };
 
     _addHandlerHideWindow() {
@@ -36,8 +39,10 @@ class AddRecipeView extends View {
         this._parentElement.addEventListener('submit', (e) => {
             e.preventDefault();
             const data = Object.fromEntries([...new FormData(this._parentElement)]);
-            this.toggleWindow();
-            // if ()
+            // if (state.my_recipes.some(recipe => recipe.title.toLowerCase() == data.title.toLowerCase()))
+            //     throw new Error(
+            //         'Such recipe already exists, please try another name :)'
+            //     )
             handler(data);
         })
     };

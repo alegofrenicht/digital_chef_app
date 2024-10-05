@@ -1,4 +1,5 @@
 import * as model from './model.js';
+import { MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -76,13 +77,23 @@ const controlBookmarks = function() {
 const controlAddRecipe = async function (newRecipe) {
   try {
     if (newRecipe.title == undefined) return;
-    if (model.state.my_recipes.some(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase())) return
-      // throw new Error(
-      //     'Such recipe already exists, please try another name :)'
-      // )
+    if (model.state.my_recipes.some(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase()))
+      throw new Error(
+          'Such recipe already exists, please try another name :)'
+      )
+    
+    addRecipeView.renderSpinner();
     await model.uploadRecipe(newRecipe);
+    addRecipeView._successMessage = 'Recipe was successfully uploaded :)';
+    addRecipeView.renderMessage();
     myRecipesView.render(model.state.my_recipes);
+
+    setTimeout(function() {
+      addRecipeView.toggleWindow()
+    }, MODAL_CLOSE_SEC * 1000);
+
   } catch (err) {
+    addRecipeView._errormessage = err.message;
     addRecipeView.renderError(err.message);
   }
 };
