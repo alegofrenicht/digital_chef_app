@@ -69,7 +69,7 @@ class RecipeView extends View {
                 </div>
             </div>
 
-            <button class="btn--round btn--bookmark">
+            <button class="btn--round btn--bookmark ${isNaN(this._data.id) ? 'hidden' : ''}">
                 <svg class="">
                 <use href="${icons}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
                 </svg>
@@ -103,12 +103,13 @@ class RecipeView extends View {
     }
 
     _generateMarkupIngredients(ing){
+        console.log(ing);
             return `
             <li class="recipe__ingredient">
             <svg class="recipe__icon">
                 <use href="${icons}#icon-check"></use>
             </svg>
-            <div class="recipe__quantity">${ing.amount ? fracty(ing.amount.toFixed(2)) : ''}</div>
+            <div class="recipe__quantity">${isNaN(ing.amount) ? ing.amount : (fracty(Number(ing.amount).toFixed(2)) == 0 ? '' : fracty(Number(ing.amount).toFixed(2)))}</div>
             <div class="recipe__description">
                 <span class="recipe__unit">${ing.unit}</span>
                 of ${ing.name}

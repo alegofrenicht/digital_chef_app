@@ -16,13 +16,11 @@ export const state = {
 export const loadRecipe = async function(id){
     try{
         let data;
-        console.log(id);
         if (isNaN(id)) {
             [data] = state.my_recipes.filter(recipe => recipe.id == id.replaceAll('%20', ' '))
         } else {
             data = await getJSON(`${API_URL}${id}/information?${API_KEY}`);
         };
-        console.log(data);
         state.recipe = {
             id: data.id,
             title: data.title,
@@ -35,7 +33,8 @@ export const loadRecipe = async function(id){
             bookmarked: false,
     };
 
-    if (state.bookmarks.some(bookmark => bookmark.id === +id)) state.recipe.bookmarked = true;
+    if (state.bookmarks.some(bookmark => bookmark.id == id)) 
+        state.recipe.bookmarked = true;
     } catch(err){
         console.log(err)
         throw err;
@@ -109,21 +108,22 @@ export const uploadRecipe = async function (newRecipe) {
       .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map(ing => {
       //   const ingArr = ing[1].split(',').map(el => el.trim());
-          const ingArr = ing[1].replaceAll(' ', '').split(',');
+          const ingArr = ing[1].split(',');
           if (ingArr.length !== 3)
           throw new Error(
               'Wrong ingredient format! Please use the correct format :)'
           );
 
           const [amount, unit, name] = ingArr;
+          console.log(amount);
 
-          return { amount: amount ? +amount : null, unit, name };
+          return { amount: amount ? amount : null, unit, name };
       });
 
       const recipe = {
         id: newRecipe.title + newRecipe.cookingTime,
         title: newRecipe.title,
-        creditsText: newRecipe.publisher,
+        creditsText: newRecipe.publisher, 
         sourceUrl: newRecipe.sourceUrl,
         image: newRecipe.image,
         servings: +newRecipe.servings,
