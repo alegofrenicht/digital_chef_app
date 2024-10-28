@@ -87,6 +87,10 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView._successMessage = 'Recipe was successfully uploaded :)';
     addRecipeView.renderMessage();
     myRecipesView.render(model.state.my_recipes);
+    const id = model.state.my_recipes.filter(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase())
+    await model.loadRecipe(id[0].id);
+    console.log("model.state.recipe", model.state.recipe);
+    recipeView.render(model.state.recipe);
 
     setTimeout(function() {
       addRecipeView.toggleWindow()

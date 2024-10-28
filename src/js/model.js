@@ -115,7 +115,6 @@ export const uploadRecipe = async function (newRecipe) {
           );
 
           const [amount, unit, name] = ingArr;
-          console.log(amount);
 
           return { amount: amount ? amount : null, unit, name };
       });

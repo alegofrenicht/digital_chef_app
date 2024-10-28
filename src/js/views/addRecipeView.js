@@ -39,10 +39,6 @@ class AddRecipeView extends View {
         this._parentElement.addEventListener('submit', (e) => {
             e.preventDefault();
             const data = Object.fromEntries([...new FormData(this._parentElement)]);
-            // if (state.my_recipes.some(recipe => recipe.title.toLowerCase() == data.title.toLowerCase()))
-            //     throw new Error(
-            //         'Such recipe already exists, please try another name :)'
-            //     )
             handler(data);
         })
     };
