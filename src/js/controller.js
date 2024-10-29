@@ -88,9 +88,7 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderMessage();
     myRecipesView.render(model.state.my_recipes);
     const id = model.state.my_recipes.filter(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase())
-    await model.loadRecipe(id[0].id);
-    console.log("model.state.recipe", model.state.recipe);
-    recipeView.render(model.state.recipe);
+    window.location.href = `${window.location.hostname}#${id}`
 
     setTimeout(function() {
       addRecipeView.toggleWindow()
@@ -107,6 +105,14 @@ const controlMyRecipes = function() {
   myRecipesView.update(model.state.my_recipes);
 };
 
+const controlLogoBtn = function() {
+  const logo = document.querySelector('.header__logo');
+  const url = window.location.hash
+  logo.addEventListener('click', function(){
+    window.location.href = window.location.hostname;
+  })
+}
+
 const init = function(){
   myRecipesView.addHandlerRender(controlMyRecipes);
   myRecipesView.addHandlerRender(controlAddRecipe);
@@ -117,6 +123,7 @@ const init = function(){
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlSearchPagination);
+  controlLogoBtn();
 };
 
 init()

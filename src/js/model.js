@@ -107,7 +107,6 @@ export const uploadRecipe = async function (newRecipe) {
       const extendedIngredients = Object.entries(newRecipe)
       .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map(ing => {
-      //   const ingArr = ing[1].split(',').map(el => el.trim());
           const ingArr = ing[1].split(',');
           if (ingArr.length !== 3)
           throw new Error(
@@ -132,7 +131,6 @@ export const uploadRecipe = async function (newRecipe) {
 
       state.my_recipes.push(recipe);
       localStorage.setItem('recipes', JSON.stringify(state.my_recipes));
-      // sendJSON()
     };
 
     
