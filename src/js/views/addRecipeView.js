@@ -21,7 +21,7 @@ class AddRecipeView extends View {
     }
 
     toggleWindow() {
-        if (this._errormessage.length > 0 || this._successMessage.length > 0) window.location.reload();
+        // if (this._errormessage.length > 0 || this._successMessage.length > 0) window.location.reload();
         this._overlay.classList.toggle('hidden');
         this._window.classList.toggle('hidden');
     }
