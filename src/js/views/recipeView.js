@@ -69,11 +69,12 @@ class RecipeView extends View {
                 </div>
             </div>
 
-            <button class="btn--round btn--bookmark ${isNaN(this._data.id) ? 'hidden' : ''}">
+            <button class="btn--round btn--bookmark">
                 <svg class="">
                 <use href="${icons}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
                 </svg>
             </button>
+            <h1 class="recipe__myrecipe-mark ${isNaN(this._data.id) ? '' : 'hidden'}">Added recipe</h1>
             </div>
 
             <div class="recipe__ingredients">

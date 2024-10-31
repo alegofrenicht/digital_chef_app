@@ -86,6 +86,11 @@
     font-weight: 600;
   }
 
+  &__myrecipe-icon {
+    display: flex;
+    margin-bottom: 2rem;
+  }
+
   &__user-generated {
     background-color: darken($color-grey-light-2, 2%);
 

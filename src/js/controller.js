@@ -88,7 +88,6 @@ const controlAddRecipe = async function (newRecipe) {
     addRecipeView.renderMessage();
     myRecipesView.render(model.state.my_recipes);
     const id = model.state.my_recipes.filter(recipe => recipe.title.toLowerCase() == newRecipe.title.toLowerCase())
-    console.log("id", id[0].id);
     window.location.href = `${window.location.hostname}#${id[0].id}`
 
     setTimeout(function() {

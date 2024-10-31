@@ -99,6 +99,11 @@
     transform: translateY(-1px);
   }
 
+  &__myrecipe-mark {
+    display: flex;
+    margin-left: 3rem;
+  }
+
   &__user-generated {
     background-color: darken($color-grey-light-2, 2%);
 
