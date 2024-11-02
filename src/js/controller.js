@@ -109,6 +109,7 @@ const controlLogoBtn = function() {
   const logo = document.querySelector('.header__logo');
   const url = window.location.hash
   logo.addEventListener('click', function(){
+    console.log("hostname", window.location.hostname);
     window.location.href = window.location.hostname;
   })
 }
