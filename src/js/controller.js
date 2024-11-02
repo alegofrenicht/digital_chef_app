@@ -110,7 +110,7 @@ const controlLogoBtn = function() {
   const url = window.location.hash
   logo.addEventListener('click', function(){
     console.log("hostname", window.location.hostname);
-    // window.location.href = window.location.hostname;
+    window.location.href = `https://${window.location.hostname}`;
   })
 }
 
