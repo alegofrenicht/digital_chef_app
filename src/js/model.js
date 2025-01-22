@@ -1,5 +1,5 @@
-import { API_URL, API_KEY, REC_PER_PAGE } from "./config.js";
-import { getJSON, sendJSON } from "./helpers.js";
+import { API_URL, API_KEY, REC_PER_PAGE, EC_IDENTITY_API_URL } from "./config.js";
+import { getJSON, sendJSON, sendJSONIDENTITY } from "./helpers.js";
 
 export const state = {
     recipe: {},
@@ -11,8 +11,15 @@ export const state = {
        resultsPerPage: REC_PER_PAGE,
     },
     bookmarks: [],
+    api: []
 };
 
+
+// export const payButton = async function(){
+//     let data;
+//     data = await sendJSONIDENTITY(`${EC_IDENTITY_API_URL}`)
+//     state.api = {}
+// }
 export const loadRecipe = async function(id){
     try{
         let data;

@@ -1,5 +1,7 @@
 export const API_URL = "https://api.spoonacular.com/recipes/";
-export const HOST_URL = "https://digital-chef.netlify.app/"
+export const EC_IDENTITY_API_URL = "https://identity.e-c.co.il/connect/token";
+export const TERMINAL_PRIVATE_KEY = "FNdCB+LoD6KM08DeL2azPQwgGNZlBlMRDMs6tx703fj0pbsIwCsZHOiXqFCn3/SQ1lE0PWFHQqF2zOsu65y+0g==";
+export const HOST_URL = "https://digital-chef.netlify.app/";
 export const API_KEY = "apiKey=d754bd859d5c40abaf88e8715002bd21";
 export const TIMEOUT_SEC = 10;
 export const REC_PER_PAGE = 8; 
