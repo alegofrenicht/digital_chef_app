@@ -1,5 +1,6 @@
 import * as model from './model.js';
-import { MODAL_CLOSE_SEC } from './config.js';
+import { MODAL_CLOSE_SEC, EC_IDENTITY_API_URL } from './config.js';
+import { getToken } from './helpers';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -112,6 +113,18 @@ const controlLogoBtn = function() {
     console.log("hostname", window.location.hostname);
     window.location.href = `https://${window.location.hostname}`;
   })
+};
+
+const paymentBtn = async function() {
+  const payment_button = document.querySelector('.payment__btn');
+
+  try {
+    const token = await getToken();  // Wait for the getToken function to resolve
+    console.log(token);  // Log the token or handle it as needed
+  } catch (error) {
+    console.error("Error fetching token:", error);
+  }
+
 }
 
 const init = function(){
@@ -125,6 +138,7 @@ const init = function(){
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlSearchPagination);
   controlLogoBtn();
+  paymentBtn();
 };
 
 init()
