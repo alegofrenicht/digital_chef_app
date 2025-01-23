@@ -1,5 +1,5 @@
-import { API_URL, API_KEY, REC_PER_PAGE, EC_IDENTITY_API_URL } from "./config.js";
-import { getJSON, sendJSON, sendJSONIDENTITY } from "./helpers.js";
+import { API_URL, API_KEY, REC_PER_PAGE, EC_API_TOKEN_URL, TERMINAL_PRIVATE_KEY, EC_API_PAYMENT_URL } from "./config.js";
+import { getJSON } from "./helpers.js";
 
 export const state = {
     recipe: {},
@@ -11,15 +11,272 @@ export const state = {
        resultsPerPage: REC_PER_PAGE,
     },
     bookmarks: [],
-    api: []
+    api: {
+        token: '',
+    }
+};
+
+export const getToken = async function () {
+  const url = EC_API_TOKEN_URL;
+  
+  const data = new URLSearchParams();
+  data.append("client_id", "terminal");
+  data.append("grant_type", "terminal_rest_api");
+  data.append("authorizationKey", TERMINAL_PRIVATE_KEY);
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: data
+  };
+
+  try {
+    const response = await fetch(url, options);
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("response", responseData);
+    //   state.api.token = responseData.access_token;
+      return responseData.access_token;
+    } else {
+      console.error("Error fetching token:", response.statusText);
+      return false;
+    }
+  } catch (error) {
+    console.error("Error during fetch:", error);
+    return false;
+  }
+}
+
+
+export const creatingLink = async function(token){
+    const url = EC_API_PAYMENT_URL;
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+
+            // "terminalID": "8fbbd3ef-d3a8-476b-ade2-b1450093bc3c",
+
+        
+            "allowCredit": false,
+        
+            "allowInstallments": true,
+        
+            "allowImmediate": true,
+        
+            "currency": "ILS",
+        
+            "invoiceType": null,
+        
+            "paymentRequestAmount": 120,
+        
+            "dueDate": null,
+        
+            "isRefund": false,
+        
+            "donation": null,
+        
+            "hidePhone": false,
+        
+            "hideEmail": false,
+        
+            "hideNationalID": false,
+        
+            "consumerDataReadonly": null,
+        
+            "showClock": null,
+        
+            "addressRequired": null,
+        
+            "dealDetails": {
+        
+                // "consumerAddress": {
+        
+                //     "city": null,
+        
+                //     "street": null,
+        
+                //     "house": null,
+        
+                //     "apartment": null,
+        
+                //     "zip": null
+        
+                // },
+        
+                // "dealReference": null,
+        
+                // "consumerEmail": null,
+        
+                // "consumerPhone": null,
+        
+                // "consumerID": null,
+        
+                // "dealDescription": null,
+        
+                "items": [
+        
+                    {
+        
+                        "price": 20,
+        
+                        "discount": 0,
+        
+                        "amount": 20,
+        
+                        "itemName": "Привет дашулькин, оплати мне протеинчик"
+                        ,
+        
+                        "currency": "ILS",
+        
+                        "quantity": 1,
+        
+                        "externalReference": null,
+        
+                        "default": true,
+        
+                        "vat": 2.91,
+        
+                        "netAmount": 17.09,
+        
+                        "vatRate": 0.17,
+        
+                        "withoutVat": false
+        
+                    }
+        
+                ],
+        
+                // "consumerNationalID": null
+        
+            },
+        
+            "invoiceDetails": null,
+        
+            // "installmentDetails": {
+        
+            //     "minInstallments": 2,
+        
+            //     "maxInstallments": 12,
+        
+            //     "minCreditInstallments": 3,
+        
+            //     "maxCreditInstallments": 12,
+        
+            //     "totalAmount": 20,
+        
+            //     "numberOfPayments": 1,
+        
+            //     "initialPaymentAmount": 20,
+        
+            //     "installmentPaymentAmount": 20
+        
+            // },
+        
+            // "minInstallments": null,
+        
+            // "maxInstallments": null,
+        
+            // "minCreditInstallments": null,
+        
+            // "maxCreditInstallments": null,
+        
+            "customCssReference": null,
+        
+            "redirectUrls": [],
+        
+            "legacyRedirectResponse": false,
+        
+            "continueInCaseOf3DSecureError": null,
+        
+            "defaultLanguage": "he-IL",
+        
+            "hideConsumerName": false,
+        
+            "allowSaveCreditCard": null,
+        
+            "consumerNationalIDReadonly": null,
+        
+            "consumerPhoneReadonly": null,
+        
+            "consumerNameReadonly": null,
+        
+            "countdownTime": 180,
+        
+            "saveCreditCardByDefault": null,
+        
+            "disableCancelPayment": null,
+        
+            "phoneRequired": null,
+        
+            "emailRequired": null,
+        
+            "hideDealDescription": null,
+        
+            "noteEnabled": null,
+        
+            "alternativeMerchantName": null,
+        
+            "allowOnlyILS": null,
+        
+            "hideAddress": true,
+        
+            "transactionSucceedUrl": null,
+        
+            "transactionFailedUrl": null,
+        
+            // "netTotal": 17.09,
+        
+            // "vatTotal": 2.91,
+        
+            // "vatRate": 0.17,
+        
+            // "totalAmount": 20,
+        
+            // "amount": 20,
+        
+            // "transactionAmount": 20,
+        
+            "transactionType": "regularDeal",
+        
+            "consumerSpecified": false,
+        
+            "consumerNationalIdSpecified": false,
+        
+            "consumerEmailSpecified": false,
+        
+            "allowRegular": true,
+        
+            "additionalFields": {},
+        
+            "paymentIntent": true
+        
+        })
+    };
+
+    try {
+        const response = await fetch(url, options);
+        if (response.ok) {
+        const responseData = await response.json();
+        return responseData.additionalData.url;
+        } else {
+        console.error("Error fetching token:", response.statusText);
+        return false;
+        }
+    } catch (error) {
+        console.error("Error during fetch:", error);
+        return false;
+    }
+
 };
 
 
-// export const payButton = async function(){
-//     let data;
-//     data = await sendJSONIDENTITY(`${EC_IDENTITY_API_URL}`)
-//     state.api = {}
-// }
+
 export const loadRecipe = async function(id){
     try{
         let data;

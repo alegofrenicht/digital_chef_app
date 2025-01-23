@@ -1,6 +1,6 @@
 import * as model from './model.js';
-import { MODAL_CLOSE_SEC, EC_IDENTITY_API_URL } from './config.js';
-import { getToken } from './helpers';
+import { MODAL_CLOSE_SEC } from './config.js';
+// import {  } from './helpers';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -110,17 +110,21 @@ const controlLogoBtn = function() {
   const logo = document.querySelector('.header__logo');
   const url = window.location.hash
   logo.addEventListener('click', function(){
-    console.log("hostname", window.location.hostname);
     window.location.href = `https://${window.location.hostname}`;
   })
 };
 
 const paymentBtn = async function() {
+  let token
+  let payment_link
   const payment_button = document.querySelector('.payment__btn');
-
   try {
-    const token = await getToken();  // Wait for the getToken function to resolve
-    console.log(token);  // Log the token or handle it as needed
+    token = await model.getToken();
+    payment_link = await model.creatingLink(token);
+    payment_button.addEventListener('click', function(){
+      window.location.href = `${payment_link}`
+    })
+    
   } catch (error) {
     console.error("Error fetching token:", error);
   }

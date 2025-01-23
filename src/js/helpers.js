@@ -1,4 +1,4 @@
-import { TIMEOUT_SEC, EC_IDENTITY_API_URL, TERMINAL_PRIVATE_KEY } from "./config";
+import { TIMEOUT_SEC } from "./config";
 
 
 const timeout = function (s) {
@@ -43,37 +43,3 @@ console.log(err);
 throw err;
 };
 };
-
-
-export const getToken = async function () {
-  const url = EC_IDENTITY_API_URL;
-  
-  const data = new URLSearchParams();
-  data.append("client_id", "terminal");
-  data.append("grant_type", "terminal_rest_api");
-  data.append("authorizationKey", TERMINAL_PRIVATE_KEY);
-
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: data
-  };
-
-  try {
-    const response = await fetch(url, options);
-    console.log("WHAT HAPPPENED", response);
-    if (response.ok) {
-      console.log('OKKKK');
-      const responseData = await response.json();
-      return responseData.authorizationKey;
-    } else {
-      console.error("Error fetching token:", response.statusText);
-      return false;
-    }
-  } catch (error) {
-    console.error("Error during fetch:", error);
-    return false;
-  }
-}

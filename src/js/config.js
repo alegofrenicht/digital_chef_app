@@ -1,5 +1,6 @@
 export const API_URL = "https://api.spoonacular.com/recipes/";
-export const EC_IDENTITY_API_URL = "https://identity.e-c.co.il/connect/token";
+export const EC_API_TOKEN_URL = "https://cors-anywhere.herokuapp.com/https://identity.e-c.co.il/connect/token";
+export const EC_API_PAYMENT_URL = "https://cors-anywhere.herokuapp.com/https://api.e-c.co.il/api/paymentIntent"
 export const TERMINAL_PRIVATE_KEY = "FNdCB+LoD6KM08DeL2azPQwgGNZlBlMRDMs6tx703fj0pbsIwCsZHOiXqFCn3/SQ1lE0PWFHQqF2zOsu65y+0g==";
 export const HOST_URL = "https://digital-chef.netlify.app/";
 export const API_KEY = "apiKey=d754bd859d5c40abaf88e8715002bd21";
